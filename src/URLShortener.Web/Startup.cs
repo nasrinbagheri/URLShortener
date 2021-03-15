@@ -15,6 +15,8 @@ using URLShortener.DataAccess;
 using URLShortener.DataAccess.Contracts;
 using URLShortener.DataAccess.Repositories;
 using URLShortener.DataAccess.Services;
+using URLShortener.Encryption;
+using URLShortener.Encryption.Contracts;
 
 namespace URLShortener.Web
 {
@@ -30,10 +32,14 @@ namespace URLShortener.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+            services.Configure<HashIdOptions>(Configuration.GetSection("HashIdOptions"));
+
             services.AddScoped<IDbContext, DataAccessContext>();
             services.AddDbContext<DataAccessContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<ILinkTicketService, LinkTicketService>();
+            services.AddSingleton<IHashIdService, HashIdService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

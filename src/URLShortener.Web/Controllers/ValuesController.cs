@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using URLShortener.DataAccess.Contracts;
+using URLShortener.Encryption.Contracts;
 
 namespace URLShortener.Web.Controllers
 {
@@ -12,18 +13,20 @@ namespace URLShortener.Web.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly ILinkTicketService _ticketService;
+        private readonly IHashIdService _hashIdService;
 
-        public ValuesController(ILinkTicketService ticketService)
+        public ValuesController(ILinkTicketService ticketService, IHashIdService hashIdService)
         {
-            
+
             _ticketService = ticketService;
+            _hashIdService = hashIdService;
         }
 
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            _ticketService.GetAllRequestsAsync();
+            var test = _hashIdService.Encrypt(100);
             return new string[] { "value1", "value2" };
         }
 
