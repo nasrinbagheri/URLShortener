@@ -6,5 +6,6 @@ namespace URLShortener.IntegrationService.Contracts
     public interface IURlShortenerService
     {
         Task<LinkTicketDto> AddLinkTicket(string url);
+        Task<LinkTicketDto> VisitLinkTicket(string relativeShortenUrl);
     }
 }

@@ -34,18 +34,28 @@ namespace URLShortener.DataAccess.Services
             return result;
         }
 
-        public async Task<LinkTicketDto> UpdateShortenLinkTicketAsync(int id,string domain, string shortUrl)
+        public async Task<LinkTicketDto> UpdateShortenLinkTicketAsync(int id, string domain, string shortUrl)
         {
             var ticket = await _repository.GetByIdAsync(id);
             //todo:if (ticket==null)
 
-            ticket.UpdateShortenUrl(domain,shortUrl);
+            ticket.UpdateShortenUrl(domain, shortUrl);
             await _repository.UpdateAsync(ticket);
 
             var result = ToModel(ticket);
             return result;
         }
 
+        public async Task<LinkTicketDto> VisitShortenLinkTicketAsync(int id)
+        {
+            var ticket = await _repository.GetByIdAsync(id);
+            //todo:if (ticket==null)
+            ticket.Visited();
+            await _repository.UpdateAsync(ticket);
+
+            var result = ToModel(ticket);
+            return result;
+        }
         private LinkTicketDto ToModel(LinkTicket model)
         {
             var result = new LinkTicketDto

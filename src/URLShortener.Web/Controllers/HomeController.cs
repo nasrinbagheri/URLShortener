@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using URLShortener.IntegrationService.Contracts;
 
 namespace URLShortener.Web.Controllers
@@ -11,14 +12,16 @@ namespace URLShortener.Web.Controllers
             _shortenerService = shortenerService;
         }
 
-        public IActionResult Index(string code = null)
+        public async Task<IActionResult> Index(string code = null)
         {
             if (string.IsNullOrEmpty(code))
-            {
                 return Ok("This is my default action...");
-            }
 
-            return Redirect("https://google.com");
+            var ticket = await _shortenerService.VisitLinkTicket(code);
+
+            //todo: if (ticket == null)
+
+            return Redirect(ticket.OriginalUrl);
         }
 
 

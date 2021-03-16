@@ -15,5 +15,10 @@ namespace URLShortener.Domain
             Domain = domain;
             ShortenUrl = shortenUrl;
         }
+
+        public void Visited()
+        {
+            VisitedCount = VisitedCount + 1;
+        }
     }
 }
