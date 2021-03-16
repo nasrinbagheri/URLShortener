@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,7 +39,7 @@ namespace URLShortener.Web
         {
             services.AddOptions();
             services.Configure<HashIdOptions>(Configuration.GetSection("HashIdOptions"))
-                .Configure<URlShortenerOptions>(Configuration.GetSection("URlShortenerOptions")); 
+                .Configure<URlShortenerOptions>(Configuration.GetSection("URlShortenerOptions"));
 
             services.AddScoped<IDbContext, DataAccessContext>();
             services.AddDbContext<DataAccessContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -47,12 +48,7 @@ namespace URLShortener.Web
             services.AddSingleton<IHashIdService, HashIdService>();
             services.AddScoped<IURlShortenerService, URlShortenerService>();
 
-            //var config = new MapperConfiguration(cfg => {
-            //    cfg.AddProfile<MappingProfile>();
-            //});
-            //var mapper = new Mapper(config);
-
-            services.AddAutoMapper(cfg=> cfg.AddProfile<MappingProfile>());
+            services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -71,7 +67,15 @@ namespace URLShortener.Web
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    "default",                                            
+                   "{*code}",                                          
+                   new { controller = "Home", action = "Index" } 
+               );
+            });
+            
         }
     }
 }
