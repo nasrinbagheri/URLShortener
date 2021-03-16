@@ -1,6 +1,8 @@
 ﻿using HashidsNet;
 using Microsoft.Extensions.Options;
 using System;
+using URLShortener.Common.ErrorTypes;
+using URLShortener.Common.Exceptions;
 using URLShortener.Encryption.Contracts;
 
 namespace URLShortener.Encryption
@@ -16,12 +18,25 @@ namespace URLShortener.Encryption
 
         public long Decrypt(string encryptedId)
         {
+            if (string.IsNullOrEmpty(encryptedId))
+                throw new BusinessException<CommonErrorType>(CommonErrorType.NullArguments);
+
             encryptedId = encryptedId?.Trim();
-            //todo:if (string.IsNullOrEmpty(encryptedId))
 
-            var result = hashids.Decode(encryptedId);
+            int[] result;
+            try
+            {
+                result = hashids.Decode(encryptedId);
+            }
+            catch (Exception)
+            {
 
-            //todo: if (result.Length != 1)
+                throw new BusinessException<EncryptionErrorType>(EncryptionErrorType.ErrorInDecryption);
+            }
+
+
+            if (result == null || result.Length != 1)
+                throw new BusinessException<EncryptionErrorType>(EncryptionErrorType.ErrorInDecryption);
 
             return result[0];
 
@@ -29,7 +44,17 @@ namespace URLShortener.Encryption
 
         public string Encrypt(long id)
         {
-            var encryptedId = hashids.EncodeLong(id);
+            string encryptedId;
+            try
+            {
+                encryptedId = hashids.EncodeLong(id);
+            }
+            catch (Exception)
+            {
+
+                throw new BusinessException<EncryptionErrorType>(EncryptionErrorType.ErrorInEncryption);
+            }
+
             return encryptedId;
         }
     }

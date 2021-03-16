@@ -16,7 +16,7 @@ namespace URLShortener.Web.Controllers
 
         public async Task<IActionResult> Index(string code = null)
         {
-            if (string.IsNullOrEmpty(code))
+            if (string.IsNullOrEmpty(code) || code.Contains("/"))
                 return Ok("This is my default action...");
 
             var ticket = await _shortenerService.VisitLinkTicket(code);
