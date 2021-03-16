@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using URLShortener.Common.ErrorTypes;
+using URLShortener.Common.Exceptions;
 using URLShortener.IntegrationService.Contracts;
 
 namespace URLShortener.Web.Controllers
@@ -19,7 +21,8 @@ namespace URLShortener.Web.Controllers
 
             var ticket = await _shortenerService.VisitLinkTicket(code);
 
-            //todo: if (ticket == null)
+            if (ticket == null)
+                throw new BusinessException<LinkTicketErrorType>(LinkTicketErrorType.NotExistUrl);
 
             return Redirect(ticket.OriginalUrl);
         }
