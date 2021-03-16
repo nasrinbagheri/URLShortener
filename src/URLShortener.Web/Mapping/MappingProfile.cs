@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using URLShortener.DataAccess.Dtos;
+using URLShortener.Web.Dtos;
 
 namespace URLShortener.Web.Mapping
 {
@@ -6,7 +8,7 @@ namespace URLShortener.Web.Mapping
     {
         public MappingProfile()
         {
-            //CreateMap<User, UserDto>();
+            CreateMap<LinkTicketDto, LinkTicketReportDto>();
         }
     }
 }

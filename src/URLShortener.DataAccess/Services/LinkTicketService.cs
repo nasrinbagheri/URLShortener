@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using URLShortener.Common.ErrorTypes;
+using URLShortener.Common.Exceptions;
 using URLShortener.DataAccess.Contracts;
 using URLShortener.DataAccess.Dtos;
 using URLShortener.Domain;
@@ -20,14 +22,19 @@ namespace URLShortener.DataAccess.Services
             var t = _repository.Table.ToList();
         }
 
+        public async Task<LinkTicketDto> GetLinkTicketByIdAsync(int id)
+        {
+            var ticket = await _repository.GetByIdAsync(id);
+            if (ticket == null)
+                throw new BusinessException<LinkTicketErrorType>(LinkTicketErrorType.NotExistUrl);
+
+            var result = ToModel(ticket);
+            return result;
+        }
+
         public async Task<LinkTicketDto> AddAsync(string originalUrl)
         {
-            //todo: if (string.IsNullOrEmpty(originalUrl))
-
-            //var uri = new Uri(originalUrl);
-            //var domain = $"{uri.Scheme}://{uri.Authority}";
-
-            var model = new LinkTicket { OriginalUrl = originalUrl };
+            var model = new LinkTicket(originalUrl);
             await _repository.InsertAsync(model);
 
             var result = ToModel(model);
@@ -37,7 +44,8 @@ namespace URLShortener.DataAccess.Services
         public async Task<LinkTicketDto> UpdateShortenLinkTicketAsync(int id, string domain, string shortUrl)
         {
             var ticket = await _repository.GetByIdAsync(id);
-            //todo:if (ticket==null)
+            if (ticket == null)
+                throw new BusinessException<LinkTicketErrorType>(LinkTicketErrorType.NotExistUrl);
 
             ticket.UpdateShortenUrl(domain, shortUrl);
             await _repository.UpdateAsync(ticket);
@@ -49,7 +57,9 @@ namespace URLShortener.DataAccess.Services
         public async Task<LinkTicketDto> VisitShortenLinkTicketAsync(int id)
         {
             var ticket = await _repository.GetByIdAsync(id);
-            //todo:if (ticket==null)
+
+            if (ticket == null)
+                throw new BusinessException<LinkTicketErrorType>(LinkTicketErrorType.NotExistUrl);
             ticket.Visited();
             await _repository.UpdateAsync(ticket);
 

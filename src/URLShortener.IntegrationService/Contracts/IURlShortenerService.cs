@@ -7,5 +7,6 @@ namespace URLShortener.IntegrationService.Contracts
     {
         Task<LinkTicketDto> AddLinkTicket(string url);
         Task<LinkTicketDto> VisitLinkTicket(string relativeShortenUrl);
+        Task<LinkTicketDto> GetVisitCountReportAsync(string relativeShortenUrl);
     }
 }
