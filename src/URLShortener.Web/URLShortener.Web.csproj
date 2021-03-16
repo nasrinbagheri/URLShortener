@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\URLShortener.DataAccess\URLShortener.DataAccess.csproj" />
     <ProjectReference Include="..\URLShortener.Encryption\URLShortener.Encryption.csproj" />
+    <ProjectReference Include="..\URLShortener.IntegrationService\URLShortener.IntegrationService.csproj" />
   </ItemGroup>
 
 </Project>

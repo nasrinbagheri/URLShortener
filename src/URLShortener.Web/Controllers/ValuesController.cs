@@ -8,7 +8,7 @@ using URLShortener.Encryption.Contracts;
 
 namespace URLShortener.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1.0/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {

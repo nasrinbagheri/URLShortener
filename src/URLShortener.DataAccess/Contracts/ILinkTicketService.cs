@@ -9,6 +9,7 @@ namespace URLShortener.DataAccess.Contracts
     public interface ILinkTicketService
     {
         void GetAllRequestsAsync();
-        Task<LinkTicketDto> Add(string originalUrl);
+        Task<LinkTicketDto> AddAsync(string originalUrl);
+        Task<LinkTicketDto> UpdateShortenLinkTicketAsync(int id, string reletiveShortUrl);
     }
 }

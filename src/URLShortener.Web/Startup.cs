@@ -17,6 +17,8 @@ using URLShortener.DataAccess.Repositories;
 using URLShortener.DataAccess.Services;
 using URLShortener.Encryption;
 using URLShortener.Encryption.Contracts;
+using URLShortener.IntegrationService;
+using URLShortener.IntegrationService.Contracts;
 
 namespace URLShortener.Web
 {
@@ -40,6 +42,7 @@ namespace URLShortener.Web
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<ILinkTicketService, LinkTicketService>();
             services.AddSingleton<IHashIdService, HashIdService>();
+            services.AddScoped<IURlShortenerService, URlShortenerService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

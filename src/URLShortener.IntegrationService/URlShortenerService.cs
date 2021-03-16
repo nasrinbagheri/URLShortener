@@ -7,7 +7,7 @@ using URLShortener.IntegrationService.Contracts;
 
 namespace URLShortener.IntegrationService
 {
-    public class URlShortenerService: IURlShortenerService
+    public class URlShortenerService : IURlShortenerService
     {
         private readonly ILinkTicketService _linkTicketService;
         private readonly IHashIdService _hashIdService;
@@ -19,7 +19,12 @@ namespace URLShortener.IntegrationService
 
         public async Task<LinkTicketDto> AddLinkTicket(string url)
         {
-            var result = await _linkTicketService.Add(url).ConfigureAwait(false);
+            var result = await _linkTicketService.AddAsync(url).ConfigureAwait(false);
+            //todo: if (result==null)
+
+            var hashedId = _hashIdService.Encrypt(result.Id);
+
+            result = await _linkTicketService.UpdateShortenLinkTicketAsync(result.Id, hashedId);
             return result;
         }
     }

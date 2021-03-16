@@ -20,6 +20,12 @@ namespace URLShortener.DataAccess.Repositories
 
         public IQueryable<T> Table => _context.Set<T>();
 
+        public async Task<T> GetByIdAsync(int id)
+        {
+            var result =await _context.Set<T>().FindAsync(id);
+            return result;
+        }
+
         public async Task InsertAsync(T entity)
         {
             if (entity == null)

@@ -9,5 +9,10 @@ namespace URLShortener.Domain
         public string ShortenUrl { get; set; }
         public string OriginalUrl { get; set; }
         public int VisitedCount { get; set; }
+
+        public void UpdateShortenUrl(string relativeShortenUrl)
+        {
+            ShortenUrl = $"{Domain}/{relativeShortenUrl}";
+        }
     }
 }

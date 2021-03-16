@@ -20,10 +20,9 @@ namespace URLShortener.DataAccess.Services
             var t = _repository.Table.ToList();
         }
 
-        public async Task<LinkTicketDto> Add(string originalUrl)
+        public async Task<LinkTicketDto> AddAsync(string originalUrl)
         {
             //todo: if (string.IsNullOrEmpty(originalUrl))
-
 
             var uri = new Uri(originalUrl);
             var domain = $"{uri.Scheme}://{uri.Authority}";
@@ -31,6 +30,24 @@ namespace URLShortener.DataAccess.Services
             var model = new LinkTicket { OriginalUrl = originalUrl, Domain = domain };
             await _repository.InsertAsync(model);
 
+            var result = ToModel(model);
+            return result;
+        }
+
+        public async Task<LinkTicketDto> UpdateShortenLinkTicketAsync(int id, string reletiveShortUrl)
+        {
+            var ticket = await _repository.GetByIdAsync(id);
+            //todo:if (ticket==null)
+
+            ticket.UpdateShortenUrl(reletiveShortUrl);
+            await _repository.UpdateAsync(ticket);
+
+            var result = ToModel(ticket);
+            return result;
+        }
+
+        private LinkTicketDto ToModel(LinkTicket model)
+        {
             var result = new LinkTicketDto
             {
                 Domain = model.Domain,
