@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "URLShortener.IntegrationSer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "URLShortener.Encryption", "src\URLShortener.Encryption\URLShortener.Encryption.csproj", "{818605A2-4123-4C87-9CA8-09DDB8FD2DB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "URLShortener.Common", "URLShortener.Common\URLShortener.Common.csproj", "{E08291FE-1FB8-4CE1-A13F-81EDD35EF999}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{818605A2-4123-4C87-9CA8-09DDB8FD2DB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{818605A2-4123-4C87-9CA8-09DDB8FD2DB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{818605A2-4123-4C87-9CA8-09DDB8FD2DB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E08291FE-1FB8-4CE1-A13F-81EDD35EF999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E08291FE-1FB8-4CE1-A13F-81EDD35EF999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E08291FE-1FB8-4CE1-A13F-81EDD35EF999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E08291FE-1FB8-4CE1-A13F-81EDD35EF999}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{8AE9DD73-4241-489D-B6BE-D554053B1ECE} = {3356D85A-F22C-48A1-9DAB-7346D9AB0A0D}
 		{E2896AC5-11BF-4ACB-9E17-E80E73102B97} = {3356D85A-F22C-48A1-9DAB-7346D9AB0A0D}
 		{818605A2-4123-4C87-9CA8-09DDB8FD2DB5} = {3356D85A-F22C-48A1-9DAB-7346D9AB0A0D}
+		{E08291FE-1FB8-4CE1-A13F-81EDD35EF999} = {3356D85A-F22C-48A1-9DAB-7346D9AB0A0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6F9FC401-92BA-4BD7-8202-D4CA5C23265B}
