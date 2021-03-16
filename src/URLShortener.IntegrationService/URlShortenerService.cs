@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using System;
 using System.Threading.Tasks;
 using URLShortener.DataAccess.Contracts;
 using URLShortener.DataAccess.Dtos;
@@ -11,10 +12,13 @@ namespace URLShortener.IntegrationService
     {
         private readonly ILinkTicketService _linkTicketService;
         private readonly IHashIdService _hashIdService;
-        public URlShortenerService(ILinkTicketService linkTicketService, IHashIdService hashIdService)
+        private readonly string _defaultDomain;
+        public URlShortenerService(ILinkTicketService linkTicketService, IHashIdService hashIdService
+            , IOptions<URlShortenerOptions> options)
         {
             _linkTicketService = linkTicketService;
             _hashIdService = hashIdService;
+            _defaultDomain = options.Value.DefaultDomain;
         }
 
         public async Task<LinkTicketDto> AddLinkTicket(string url)
@@ -24,8 +28,11 @@ namespace URLShortener.IntegrationService
 
             var hashedId = _hashIdService.Encrypt(result.Id);
 
-            result = await _linkTicketService.UpdateShortenLinkTicketAsync(result.Id, hashedId);
+            var shortenUrl = $"{_defaultDomain}/{hashedId}";
+            result = await _linkTicketService.UpdateShortenLinkTicketAsync(result.Id, _defaultDomain, shortenUrl);
             return result;
+
+            //todo: handle duplicate errorr
         }
     }
 }

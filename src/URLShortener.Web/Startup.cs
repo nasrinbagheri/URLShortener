@@ -35,7 +35,8 @@ namespace URLShortener.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
-            services.Configure<HashIdOptions>(Configuration.GetSection("HashIdOptions"));
+            services.Configure<HashIdOptions>(Configuration.GetSection("HashIdOptions"))
+                .Configure<URlShortenerOptions>(Configuration.GetSection("URlShortenerOptions")); 
 
             services.AddScoped<IDbContext, DataAccessContext>();
             services.AddDbContext<DataAccessContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
