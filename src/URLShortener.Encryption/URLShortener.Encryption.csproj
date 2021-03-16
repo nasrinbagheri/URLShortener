@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\URLShortener.Common\URLShortener.Common.csproj" />
+    <ProjectReference Include="..\URLShortener.Common\URLShortener.Common.csproj" />
   </ItemGroup>
 
 </Project>
