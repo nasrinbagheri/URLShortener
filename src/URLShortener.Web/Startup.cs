@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -19,6 +20,7 @@ using URLShortener.Encryption;
 using URLShortener.Encryption.Contracts;
 using URLShortener.IntegrationService;
 using URLShortener.IntegrationService.Contracts;
+using URLShortener.Web.Mapping;
 
 namespace URLShortener.Web
 {
@@ -44,6 +46,13 @@ namespace URLShortener.Web
             services.AddScoped<ILinkTicketService, LinkTicketService>();
             services.AddSingleton<IHashIdService, HashIdService>();
             services.AddScoped<IURlShortenerService, URlShortenerService>();
+
+            //var config = new MapperConfiguration(cfg => {
+            //    cfg.AddProfile<MappingProfile>();
+            //});
+            //var mapper = new Mapper(config);
+
+            services.AddAutoMapper(cfg=> cfg.AddProfile<MappingProfile>());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

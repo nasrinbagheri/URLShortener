@@ -1,4 +1,4 @@
-﻿namespace URLShortener.Web.WriteDtos
+﻿namespace URLShortener.Web.Dtos
 {
     public class ShortenDto
     {

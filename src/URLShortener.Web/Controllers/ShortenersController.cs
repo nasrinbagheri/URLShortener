@@ -1,17 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using URLShortener.IntegrationService.Contracts;
-using URLShortener.Web.WriteDtos;
+using URLShortener.Web.Dtos;
 
 namespace URLShortener.Web.Controllers
 {
     [Route("api/v1.0/[controller]")]
     [ApiController]
-    public class ShortenersController : ControllerBase
+    public class ShortenersController : BaseController
     {
         private readonly IURlShortenerService _shortenerService;
-        public ShortenersController(IURlShortenerService shortenerService)
+        public ShortenersController(IURlShortenerService shortenerService, IMapper mapper) : base(mapper)
         {
             _shortenerService = shortenerService;
         }
@@ -24,11 +25,14 @@ namespace URLShortener.Web.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ShortenDto dto)
+        public async Task<ResultDto<string>> Post([FromBody] ShortenDto dto)
         {
             //todo: check null
-            var test = await _shortenerService.AddLinkTicket(dto.Url).ConfigureAwait(false);
-            return Ok(null);
+            var result = await _shortenerService.AddLinkTicket(dto.Url).ConfigureAwait(false);
+            //todo: if (result==null)
+            
+            var retVal = ToResultDto<string, string>(result.ShortenUrl); ;
+            return retVal;
         }
     }
 }
